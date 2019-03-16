@@ -1,9 +1,13 @@
 # Analisa Data Dalam Dota2
 
 struct Vec{
+
     int x,y,z;
+    
 };
+
 struct Snd{
+
     uint16_t id_player;
     Vec pos;
     uint32_t id_karakter;
