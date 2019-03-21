@@ -14,7 +14,7 @@ struct Snd{
 };
 int main()
 {
-    struct Snd headr;
+    struct Snd headr,stReceiver;
     WSADATA wsa;
     SOCKET clientsock;
     char buffer[512];
@@ -50,10 +50,14 @@ int main()
                 headr.pos.y = 30;
                 headr.pos.z = 42;
                 strcpy(headr.action,"Attack");
-                char data[sizeof(Snd)];
+                byte data[sizeof(Snd)];
                 memcpy(data,&headr,sizeof(Snd));
-                sendByte = send(clientsock,data,sizeof(Snd),0);
+                sendByte = send(clientsock,reinterpret_cast<char*>(data),sizeof(Snd),0);
+                memset(data,0,sizeof(data));
                 cout<<"\nSend Byte = "<<sendByte;
+                received = recv(clientsock,reinterpret_cast<char*>(data),sizeof(Snd),0);
+                cout<<"\nReceive Byte = "<<received;
+
             }
         }else{
             closesocket(clientsock);

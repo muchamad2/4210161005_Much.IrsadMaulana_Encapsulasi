@@ -51,8 +51,8 @@ int main(int argc, char *argv[])
                     else{
                         cout<<"\nsend byte : "<<sended;
                     }
-                    char newbuffer[sizeof(Snd)];
-                    receivebyte = recv(acceptSock,newbuffer,sizeof(newbuffer),0);
+                    byte newbuffer[sizeof(Snd)];
+                    receivebyte = recv(acceptSock,reinterpret_cast<char*>(newbuffer),sizeof(newbuffer),0);
                     Snd header;
                     memcpy(&header,newbuffer,sizeof(Snd));
                     cout<<"\nReceive Byte : "<<receivebyte;
@@ -60,6 +60,10 @@ int main(int argc, char *argv[])
                     <<"\nId Karakter : "<<header.id_karakter
                     <<"\nPosition : X="<<header.pos.x<<",Y="<<header.pos.y<<",Z="<<header.pos.z
                     <<"\nAction : "<<header.action;
+                    byte nbyte[sizeof(Snd)];
+                    memcpy(nbyte,&header,sizeof(Snd));
+                    sended = send(acceptSock,reinterpret_cast<char*>(nbyte),sizeof(nbyte),0);
+
                 }
             }
         }
